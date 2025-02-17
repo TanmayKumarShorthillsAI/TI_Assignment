@@ -4,7 +4,6 @@ import gc
 
 class TransformData:
     def __init__(self):
-        # self.df = df
         self.product_list = []
         pd.set_option("display.max_columns", 10)
         pd.set_option("display.width", 500)
@@ -17,8 +16,6 @@ class TransformData:
             combined_df["Post_event_list"].apply(lambda x: event_id in x.split(","))
         ]
 
-        # return event_filtered_df
-
     def expand_product_list(self, combined_df):
         combined_df["Post_product_list"] = combined_df["Post_product_list"].apply(
             lambda x: x.split(",")
@@ -27,7 +24,6 @@ class TransformData:
             ["Post_product_list", "URL"]
         )
         return expanded_df
-        # print(self.df.head())
 
     def make_new_records(self, arr, url):
         product_dict = {
@@ -70,7 +66,6 @@ class TransformData:
         del self.product_list
         gc.collect()
         return product_info_df
-        # print(product_info_df)
 
     def impression_count_by_name(self, product_df):
         impression_by_domain_df = product_df.groupby("Domain_name").agg(
@@ -83,5 +78,4 @@ class TransformData:
         print(impression_by_domain_df)
         print(impression_by_dealer_id)
 
-
-
+        return (impression_by_domain_df, impression_by_dealer_id)
